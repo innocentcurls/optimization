@@ -1,0 +1,40 @@
+Za³o¿enia przyjête w programie (zawarty w kodzie komentarz):
+
+# WAZNE!
+# Algorytm MAKSYMALIZUJE funkcje celu
+# Kazde ograniczenie jest postaci: zmienne <= liczba
+# Algorytm zwraca tylko nieujemne wyniki, gdy takich nie ma jest stosowny komunikat
+___________
+
+Rozwi¹zanie zadanego problemu 
+maksymalizacja:  	x1 + x2
+ograniczenia:	-x1 + x2 <= 1
+		x1 <= 3
+		x2 <= 2
+
+Wyliczone w Pythonie:
+
+Maksimum funkcji wynosi 5.0
+Wynik maksymalizacji: [3.0, 2.0]
+
+Wyliczone za pomoc¹ solwera problemów liniowych (http://hgourvest.github.io/glpk.js/):
+
+OPTIMAL SOLUTION FOUND
+{"x1":3,"x2":2}
+___________
+
+Rozwi¹zanie analogicznego problemu z wyk³adu
+maksymalizacja:	-3x1 + 2x2
+ograniczenia:	2x1 -  x2 <= 4
+		x1 + 3x2 >= 5
+		x2 >= 0
+
+Wyliczone w Pythonie:
+
+Maksimum funkcji wynosi 5.57142857143
+Wynik maksymalizacji: [2.4285714285714288, 0.85714285714285698]
+
+Wyliczone za pomoc¹ solwera problemów liniowych (http://hgourvest.github.io/glpk.js/):
+
+OPTIMAL SOLUTION FOUND
+{"x1":2.4285714285714284,"x2":0.8571428571428571}
