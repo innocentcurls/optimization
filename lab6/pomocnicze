@@ -3,35 +3,37 @@ import parser as p
 lp = MixedIntegerLinearProgram(maximization = False)
 x = lp.new_variable(real = True, nonnegative = True)
 
-constNr = int(raw_input('Podaj liczbe zmiennych:'))
-varNr = int(raw_input('Podaj liczbe ograniczen:'))
+varNr = int(raw_input('Podaj liczbe zmiennych:'))
+constNr = int(raw_input('Podaj liczbe ograniczen:'))
+
+print('Uwaga:')
+print('Ograniczenia sa postaci: a1*x1 + a2*x2 <= M')
+
+s = ''
+for j in range(constNr):
+    print('Ograniczenie nr' + str(j+1))
+    for i in range(varNr):
+        cur = raw_input('Podaj wspolczynik przy x' + str(i+1) + ': ')
+        if i == 0:
+		    s += str(cur) + '*x[' + str(i+1) + ']'
+        else:
+            s += '+' + str(cur) + '*x[' + str(i+1) + ']'
+    s += '+x[' + str(varNr+j+1) + ']'
+    cur = raw_input('Podaj wartosc ograniczenia: ')
+    s = str(cur) + '<=' + s + '<=' + str(cur)
+    s = p.expr(s).compile()
+    lp.add_constraint(eval(s))
+    s = ''
 
 s= ''
-for i in range(varNr+1, varNr + constNr):
-    if i == varNr+1:
+for i in range(varNr, varNr + constNr):
+    if i == varNr:
         s += 'x[' + str(i+1) + ']'
     else:
         s += '+x[' + str(i+1) + ']'
 s = p.expr(s).compile()
 lp.set_objective(eval(s))
 
-print('Uwaga:')
-print('Ograniczenia sa postaci: a1*x1 + a2*x2 <= M')
-
-s = ''
-for j in range(constNr-1):
-    print('Ograniczenie nr' + str(j+1))
-    for i in range(varNr+1):
-        cur = raw_input('Podaj wspolczynik przy x' + str(i+1) + ': ')
-        if i == 0:
-		    s += str(cur) + '*x[' + str(i+1) + ']'
-        else:
-            s += '+' + str(cur) + '*x[' + str(i+1) + ']'
-    cur = raw_input('Podaj wartosc ograniczenia: ')
-    s = str(cur) + '<=' + s + '<=' + str(cur)
-    s = p.expr(s).compile()
-    lp.add_constraint(eval(s))
-    s = ''
 
 lp.show()
 
