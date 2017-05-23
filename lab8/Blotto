@@ -1,0 +1,33 @@
+# dla uproszczenia utozsamiamy strategie bedace permutacjami tych samych liczb, np. [1,2,3] i [1,3,2] i stad ulamkowe wartosci w macierzy
+# macierz A wprowadzona jest wierszowo
+# strategoe to kolejno [0,0,6], [0,1,5], [0,2,4], [0,3,3], [1,1,4], [1,2,3], [2,2,2]
+
+
+
+A = [[0, -1/3, -1/3, -1/3, -1, -1, -1], 
+     [1/3, 0, 0, 0, -1/3,  -2/3, -1], 
+     [1/3,0, 0, 0, 0, 0, 0], 
+     [1/3, 0, 0, 0, -1/3, 1/3, 1], 
+     [1, 1/3, 0, 1/3, 0, -1/3, -1], 
+     [1, 2/3, 0, -1/3, 1/3, 0, 0], 
+     [1, 1, 0, -1, 1, 0, 0]]
+
+
+lp = MixedIntegerLinearProgram(maximization=True)
+v = lp.new_variable(real=True)
+
+lp.set_objective(v[0])
+
+for i in range (len(A)):
+    lp.add_constraint(v[0] <= A[0][i]*v[1] + A[1][i]*v[2] + A[2][i]*v[3] + A[3][i]*v[4] + A[4][i]*v[5] + A[5][i]*v[6] + A[6][i]*v[7])
+    
+lp.add_constraint(1 <= v[1] + v[2] + v[3] + v[4] + v[5] + v[6] + v[7] <= 1)
+
+for i in range(1,8):
+    lp.add_constraint(0 <= v[i])
+
+lp.solve()
+lp.show()
+
+val = lp.get_values(v)
+print(val)
