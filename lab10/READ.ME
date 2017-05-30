@@ -1,0 +1,12 @@
+Problem istnienia skojarzenia maksymalnego ma swój odpowiednik dualny - problem minimalnego pokrycia wierzchołkowego.
+
+1) Problem skojarzenia maksymalnego w grafie dwudzielnym sprowadza się do znalezienia maksymalnej liczby krawędzi,
+z których żadna nie ma początku, czy też końca w tym samym punkcie.
+2) Problem minimalnego pokrycia wierzchołkowego (dla grafu dualnego) to poszukiwanie takiego minimalnego zbioru wierzchołków, 
+że każda krawędź ma przynajmniej jeden koniec w tym zbiorze.
+
+Niech C - minimalne pokrycie wierzchołkowe i M - skojarzenia maksymalne.
+W zbiorze C nie ma żadnego wierzchołka, który może być początkiem więcej niż jednej krawędzi,
+ponieważ M nie byłoby już skojarzeniem (z definicji), zatem pokrycie C mające |M| wierzchołków musi być minimalne. 
+Z tego wynika, że możemy wyznaczyć minimalne pokrycie wierzchołkowe korzystając ze skojarzenia maksymalnego,
+co jest dość intuicyjne biorąc pod uwagę fakt, że jedno "przechowuje" krawędzie, a drugie ich początki.
