@@ -1,0 +1,67 @@
+# kazdy wektor macierzy A wskazuje poczatki i konce krawedzi, przy czym kolejne miejsca to [A,B,C,D,E,F,G,q,r,s,t,u,v,w]
+# zatem [1,0,0,0,0,0,0,1,0,0,0,0,0,0] oznacza krawedz Aq
+
+
+A = [[1,0,0,0,0,0,0,1,0,0,0,0,0,0],
+     [1,0,0,0,0,0,0,0,0,1,0,0,0,0],
+     [1,0,0,0,0,0,0,0,0,0,0,0,1,0],
+     [0,1,0,0,0,0,0,1,0,0,0,0,0,0],
+     [0,1,0,0,0,0,0,0,0,0,1,0,0,0],
+     [0,0,1,0,0,0,0,0,1,0,0,0,0,0],
+     [0,0,1,0,0,0,0,0,0,1,0,0,0,0],
+     [0,0,1,0,0,0,0,0,0,0,0,1,0,0],
+     [0,0,0,1,0,0,0,1,0,0,0,0,0,0],
+     [0,0,0,1,0,0,0,0,0,0,1,0,0,0],
+     [0,0,0,1,0,0,0,0,0,0,0,0,0,1],
+     [0,0,0,0,1,0,0,0,1,0,0,0,0,0],
+     [0,0,0,0,1,0,0,0,0,0,0,0,0,1],
+     [0,0,0,0,0,1,0,0,1,0,0,0,0,0],
+     [0,0,0,0,0,1,0,0,0,0,0,1,0,0],
+     [0,0,0,0,0,1,0,0,0,0,0,0,1,0],
+     [0,0,0,0,0,0,1,0,0,1,0,0,0,0],
+     [0,0,0,0,0,0,1,0,0,0,0,0,0,1]]
+
+A1 = []
+
+for k in range(len(A[0])):
+    temp = []
+    for j in range(len(A)):
+        temp.append(A[j][k])
+    A1.append(temp)
+
+    
+    
+# standardowy
+
+p = MixedIntegerLinearProgram(maximization = true)
+x = p.new_variable(real = false)
+
+p.set_objective(x[0]+x[1]+x[2]+x[3]+x[4]+x[5]+x[6]+x[7]+x[8]+x[9]+x[10]+x[11]+x[12]+x[13]+x[14]+x[15]+x[16]+x[17])
+
+for i in range(len(A1)):
+    p.add_constraint( 1 <= A1[i][0]*x[0]+A1[i][1]*x[1]+A1[i][2]*x[2]+A1[i][3]*x[3]+A1[i][4]*x[4]+A1[i][5]*x[5]+A1[i][6]*x[6]+A1[i][7]*x[7]+A1[i][8]*x[8]+A1[i][9]*x[9]+A1[i][10]*x[10]+A1[i][11]*x[11]+A1[i][12]*x[12]+A1[i][13]*x[13]+A1[i][14]*x[14]+A1[i][15]*x[15]+A1[i][16]*x[16]+A1[i][17]*x[17] <= 1)
+    
+for i in range(len(A1[0])):
+    p.add_constraint( 0 <= x[i] <= 1)
+    
+p.show()
+p.solve()
+p.get_values(x)
+
+
+# dualny
+
+lp = MixedIntegerLinearProgram(maximization = false)
+y = lp.new_variable(real = false)
+
+lp.set_objective(y[0]+y[1]+y[2]+y[3]+y[4]+y[5]+y[6]+y[7]+y[8]+y[9]+y[10]+y[11]+y[12]+y[13])
+
+for i in range(len(A)):
+    lp.add_constraint(1<= A[i][0]*y[0]+A[i][1]*y[1]+A[i][2]*y[2]+A[i][3]*y[3]+A[i][4]*y[4]+A[i][5]*y[5]+A[i][6]*y[6]+A[i][7]*y[7]+A[i][8]*y[8]+A[i][9]*y[9]+A[i][10]*y[10]+A[i][11]*y[11]+A[i][12]*y[12]+A[i][13]*y[13])
+    
+for i in range(len(A[0])):
+    lp.add_constraint(0 <= y[i] <= 1)
+    
+lp.show()
+lp.solve()
+lp.get_values(y)
